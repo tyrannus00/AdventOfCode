@@ -1,9 +1,6 @@
 package main.java.de.tyrannus.adventofcode;
 
-import main.java.de.tyrannus.adventofcode.solutions.TwentyTwo.DayFour;
-import main.java.de.tyrannus.adventofcode.solutions.TwentyTwo.DayOne;
-import main.java.de.tyrannus.adventofcode.solutions.TwentyTwo.DayThree;
-import main.java.de.tyrannus.adventofcode.solutions.TwentyTwo.DayTwo;
+import main.java.de.tyrannus.adventofcode.solutions.TwentyTwo.*;
 
 public class AdventOfCode {
 
@@ -12,7 +9,8 @@ public class AdventOfCode {
         var dayTwo = new DayTwo();
         var dayThree = new DayThree();
         var dayFour = new DayFour();
+        var dayFive = new DayFive();
 
-        dayFour.doPartTwo(1);
+        dayFive.doPartTwo(1);
     }
 }
