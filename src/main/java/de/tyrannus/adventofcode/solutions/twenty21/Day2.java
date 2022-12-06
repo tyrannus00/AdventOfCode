@@ -1,9 +1,9 @@
-package main.java.de.tyrannus.adventofcode.solutions.TwentyOne;
+package main.java.de.tyrannus.adventofcode.solutions.twenty21;
 
-import main.java.de.tyrannus.adventofcode.Solution;
+import main.java.de.tyrannus.adventofcode.solutions.Solution;
 
-public class DayTwo extends Solution {
-    public DayTwo() {
+public class Day2 extends Solution {
+    public Day2() {
         super(2021, 2);
     }
 

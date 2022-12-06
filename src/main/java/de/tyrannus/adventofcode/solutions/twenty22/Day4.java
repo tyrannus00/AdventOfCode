@@ -1,13 +1,9 @@
-package main.java.de.tyrannus.adventofcode.solutions.TwentyTwo;
+package main.java.de.tyrannus.adventofcode.solutions.twenty22;
 
-import main.java.de.tyrannus.adventofcode.Solution;
+import main.java.de.tyrannus.adventofcode.solutions.Solution;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-
-public class DayFour extends Solution {
-
-    public DayFour() {
+public class Day4 extends Solution {
+    public Day4() {
         super(2022, 4);
     }
 

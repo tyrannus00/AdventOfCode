@@ -1,24 +1,23 @@
-package main.java.de.tyrannus.adventofcode.solutions.TwentyTwo;
+package main.java.de.tyrannus.adventofcode.solutions.twenty22;
 
-import main.java.de.tyrannus.adventofcode.Solution;
+import main.java.de.tyrannus.adventofcode.solutions.Solution;
 
-public class DayThree extends Solution {
+public class Day3 extends Solution {
 
-    private final String priorities = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private static final String PRIORITIES = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-    public DayThree() {
+    public Day3() {
         super(2022, 3);
     }
 
     @Override
     protected int partOne(String input) {
-
         var split = input.split("\n");
 
         var totalValue = 0;
 
         for (var rucksack : split) {
-            totalValue += priorities.indexOf(findCommonChar(rucksack)) + 1;
+            totalValue += PRIORITIES.indexOf(findCommonChar(rucksack)) + 1;
         }
 
         return totalValue;
@@ -26,13 +25,12 @@ public class DayThree extends Solution {
 
     @Override
     protected int partTwo(String input) {
-
         var split = input.split("\n");
 
         var totalValue = 0;
 
         for (var i = 2; i < split.length; i += 3) {
-            totalValue += priorities.indexOf(findCommonChar(split[i], split[i - 1], split[i - 2])) + 1;
+            totalValue += PRIORITIES.indexOf(findCommonChar(split[i], split[i - 1], split[i - 2])) + 1;
         }
 
         return totalValue;
@@ -73,7 +71,6 @@ public class DayThree extends Solution {
                 }
             }
         }
-
 
         throw new RuntimeException();
     }

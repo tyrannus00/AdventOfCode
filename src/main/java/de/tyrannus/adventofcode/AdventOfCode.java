@@ -1,16 +1,17 @@
 package main.java.de.tyrannus.adventofcode;
 
-import main.java.de.tyrannus.adventofcode.solutions.TwentyTwo.*;
+import main.java.de.tyrannus.adventofcode.solutions.twenty22.*;
 
 public class AdventOfCode {
 
     public static void main(String[] args) {
-        var dayOne = new DayOne();
-        var dayTwo = new DayTwo();
-        var dayThree = new DayThree();
-        var dayFour = new DayFour();
-        var dayFive = new DayFive();
+        var dayOne = new Day1();
+        var dayTwo = new Day2();
+        var dayThree = new Day3();
+        var dayFour = new Day4();
+        var dayFive = new Day5();
+        var daySix = new Day6();
 
-        dayFive.doPartTwo(1);
+        daySix.doPartTwo(1);
     }
 }

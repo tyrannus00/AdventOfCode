@@ -1,35 +1,32 @@
-package main.java.de.tyrannus.adventofcode.solutions.TwentyTwo;
+package main.java.de.tyrannus.adventofcode.solutions.twenty22;
 
-import main.java.de.tyrannus.adventofcode.Solution;
+import main.java.de.tyrannus.adventofcode.solutions.Solution;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DayFive extends Solution {
-
-    private final List<List<Character>> rows;
-
-    public DayFive() {
+public class Day5 extends Solution {
+    public Day5() {
         super(2022, 5);
-
-        rows = new ArrayList<>(9);
-
-        for (var i = 0; i < 9; i++) {
-            rows.add(new ArrayList<>());
-        }
     }
 
     @Override
     protected int partOne(String input) {
         var lines = input.split("\n");
 
-        fillRowsInitially(lines);
+        List<List<Character>> rows = new ArrayList<>(9);
 
-        for (var i = 10; i < lines.length; i++) {
-            applyProcedure(lines[i]);
+        for (var i = 0; i < 9; i++) {
+            rows.add(new ArrayList<>());
         }
 
-        printResult();
+        fillRowsInitially(rows, lines);
+
+        for (var i = 10; i < lines.length; i++) {
+            applyProcedure(rows, lines[i]);
+        }
+
+        printResult(rows);
 
         return 0;
     }
@@ -38,18 +35,24 @@ public class DayFive extends Solution {
     protected int partTwo(String input) {
         var lines = input.split("\n");
 
-        fillRowsInitially(lines);
+        List<List<Character>> rows = new ArrayList<>(9);
 
-        for (var i = 10; i < lines.length; i++) {
-            applyFastProcedure(lines[i]);
+        for (var i = 0; i < 9; i++) {
+            rows.add(new ArrayList<>());
         }
 
-        printResult();
+        fillRowsInitially(rows, lines);
+
+        for (var i = 10; i < lines.length; i++) {
+            applyFastProcedure(rows, lines[i]);
+        }
+
+        printResult(rows);
 
         return 0;
     }
 
-    private void applyFastProcedure(String instruction) {
+    private void applyFastProcedure(List<List<Character>> rows, String instruction) {
         var split = instruction.split(" ");
 
         if (split.length < 6) {
@@ -67,7 +70,7 @@ public class DayFive extends Solution {
         sub.clear();
     }
 
-    private void applyProcedure(String instruction) {
+    private void applyProcedure(List<List<Character>> rows, String instruction) {
         var split = instruction.split(" ");
 
         if (split.length < 6) {
@@ -83,7 +86,7 @@ public class DayFive extends Solution {
         }
     }
 
-    private void fillRowsInitially(String[] lines) {
+    private void fillRowsInitially(List<List<Character>> rows, String[] lines) {
         for (var i = 0; i < 8; i++) {
             var line = lines[i];
 
@@ -97,7 +100,7 @@ public class DayFive extends Solution {
         }
     }
 
-    private void printResult() {
+    private void printResult(List<List<Character>> rows) {
         var builder = new StringBuilder();
 
         for (var row : rows) {

@@ -1,12 +1,12 @@
-package main.java.de.tyrannus.adventofcode.solutions.TwentyOne;
+package main.java.de.tyrannus.adventofcode.solutions.twenty21;
 
-import main.java.de.tyrannus.adventofcode.Solution;
+import main.java.de.tyrannus.adventofcode.solutions.Solution;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class DayThree extends Solution {
-    public DayThree() {
+public class Day3 extends Solution {
+    public Day3() {
         super(2021, 3);
     }
 
