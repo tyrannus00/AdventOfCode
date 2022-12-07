@@ -13,6 +13,7 @@ public class AdventOfCode {
         var daySix = new Day6();
         var daySeven = new Day7();
 
+        daySeven.doPartOne(1);
         daySeven.doPartTwo(1);
     }
 }
