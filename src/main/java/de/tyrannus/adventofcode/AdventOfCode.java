@@ -13,7 +13,9 @@ public class AdventOfCode {
         var daySix = new Day6();
         var daySeven = new Day7();
         var dayEight = new Day8();
+        var dayNine = new Day9();
+        var dayTen = new Day10();
 
-        dayEight.doPartTwo(1);
+        dayTen.doPartOne(1);
     }
 }
