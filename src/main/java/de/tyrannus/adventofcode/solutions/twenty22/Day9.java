@@ -11,46 +11,19 @@ public class Day9 extends Solution {
 
     @Override
     protected int partOne(String input) {
-        var lines = input.split("\n");
-
-        var headPos = new int[2];
-        var tailPos = new int[2];
-
-        var tailTouchedPositions = new HashSet<Pos>();
-        tailTouchedPositions.add(new Pos(tailPos));
-
-        for (var line : lines) {
-            var direction = line.charAt(0);
-            var steps = Integer.parseInt(line.substring(2));
-
-            for (var step = 0; step < steps; step++) {
-                switch (direction) {
-                    case 'R' -> headPos[0]++;
-                    case 'L' -> headPos[0]--;
-                    case 'U' -> headPos[1]++;
-                    case 'D' -> headPos[1]--;
-                }
-
-                if (notTouching(tailPos, headPos)) {
-                    tailPos[0] += clampToAbs1(headPos[0] - tailPos[0]);
-                    tailPos[1] += clampToAbs1(headPos[1] - tailPos[1]);
-                }
-
-                tailTouchedPositions.add(new Pos(tailPos));
-            }
-        }
-
-        return tailTouchedPositions.size();
+        return simulate(2, input.split("\n"));
     }
 
     @Override
     protected int partTwo(String input) {
-        var lines = input.split("\n");
+        return simulate(10, input.split("\n"));
+    }
 
+    private int simulate(int ropeLength, String[] lines) {
+        var rope = new int[ropeLength][2];
         var tailTouchedPositions = new HashSet<Pos>();
-        tailTouchedPositions.add(new Pos(0, 0));
 
-        var rope = new int[10][2];  //0 is head, 9 is tail
+        tailTouchedPositions.add(new Pos(0, 0));
 
         for (var line : lines) {
             var direction = line.charAt(0);
@@ -64,27 +37,21 @@ public class Day9 extends Solution {
                     case 'D' -> rope[0][1]--;
                 }
 
-                for (var i = 1; i < 10; i++) {
+                for (var i = 1; i < ropeLength; i++) {
                     var pieceAhead = rope[i - 1];
                     var piece = rope[i];
 
-                    if (!notTouching(piece, pieceAhead)) {
-                        continue;
+                    if (Math.abs(pieceAhead[0] - piece[0]) > 1 || Math.abs(pieceAhead[1] - piece[1]) > 1) {
+                        piece[0] += clampToAbs1(pieceAhead[0] - piece[0]);
+                        piece[1] += clampToAbs1(pieceAhead[1] - piece[1]);
                     }
-
-                    piece[0] += clampToAbs1(pieceAhead[0] - piece[0]);
-                    piece[1] += clampToAbs1(pieceAhead[1] - piece[1]);
                 }
 
-                tailTouchedPositions.add(new Pos(rope[9]));
+                tailTouchedPositions.add(new Pos(rope[ropeLength - 1]));
             }
         }
 
         return tailTouchedPositions.size();
-    }
-
-    private boolean notTouching(int[] tail, int[] head) {
-        return Math.abs(head[0] - tail[0]) > 1 || Math.abs(head[1] - tail[1]) > 1;
     }
 
     private int clampToAbs1(int value) {
@@ -97,8 +64,14 @@ public class Day9 extends Solution {
         return value;
     }
 
+    private record Pos(int x, int y) {
+        Pos(int[] array) {
+            this(array[0], array[1]);
+        }
+    }
+
     private void printPositions(HashSet<Pos> tailTouchedPositions, int[] headPos) {
-        int minX = -11, minY = -5, maxX = 14, maxY = 15;
+        int minX = 0, minY = 0, maxX = 0, maxY = 0;
 
         for (var pos : tailTouchedPositions) {
             if (pos.x() < minX) {
@@ -133,12 +106,6 @@ public class Day9 extends Solution {
                 }
             }
             System.out.println();
-        }
-    }
-
-    private record Pos(int x, int y) {
-        Pos(int[] array) {
-            this(array[0], array[1]);
         }
     }
 }
