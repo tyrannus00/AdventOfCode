@@ -36,7 +36,7 @@ public class Day9 extends Solution {
                     tailPos[1] += clampToAbs1(headPos[1] - tailPos[1]);
                 }
 
-                tailTouchedPositions.add(new Pos(tailPos[0], tailPos[1]));
+                tailTouchedPositions.add(new Pos(tailPos));
             }
         }
 
@@ -76,7 +76,7 @@ public class Day9 extends Solution {
                     piece[1] += clampToAbs1(pieceAhead[1] - piece[1]);
                 }
 
-                tailTouchedPositions.add(new Pos(rope[9][0], rope[9][1]));
+                tailTouchedPositions.add(new Pos(rope[9]));
             }
         }
 
@@ -126,9 +126,7 @@ public class Day9 extends Solution {
                     continue;
                 }
 
-                var pos = new Pos(x, y);
-
-                if (tailTouchedPositions.contains(pos)) {
+                if (tailTouchedPositions.contains(new Pos(x, y))) {
                     System.out.print('#');
                 } else {
                     System.out.print('.');
@@ -141,22 +139,6 @@ public class Day9 extends Solution {
     private record Pos(int x, int y) {
         Pos(int[] array) {
             this(array[0], array[1]);
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (!(o instanceof Pos pos)) return false;
-
-            if (x != pos.x) return false;
-            return y == pos.y;
-        }
-
-        @Override
-        public int hashCode() {
-            var result = x;
-            result = 31 * result + y;
-            return result;
         }
     }
 }
