@@ -2,11 +2,11 @@ package main.java.de.tyrannus.adventofcode.solutions.twenty22;
 
 import main.java.de.tyrannus.adventofcode.solutions.Solution;
 
-public class Day3 extends Solution {
+public class Day03 extends Solution {
 
     private static final String PRIORITIES = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-    public Day3() {
+    public Day03() {
         super(2022, 3);
     }
 

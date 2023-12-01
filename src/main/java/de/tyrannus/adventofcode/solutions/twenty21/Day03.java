@@ -5,8 +5,8 @@ import main.java.de.tyrannus.adventofcode.solutions.Solution;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Day3 extends Solution {
-    public Day3() {
+public class Day03 extends Solution {
+    public Day03() {
         super(2021, 3);
     }
 

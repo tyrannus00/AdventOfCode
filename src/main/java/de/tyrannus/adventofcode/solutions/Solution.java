@@ -1,4 +1,4 @@
-package main.java.de.tyrannus.adventofcode;
+package main.java.de.tyrannus.adventofcode.solutions;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -12,7 +12,7 @@ import java.nio.file.Paths;
 public abstract class Solution {
     private final int year, day;
 
-    public Solution(int year, int day) {
+    protected Solution(int year, int day) {
         this.year = year;
         this.day = day;
 
@@ -23,19 +23,19 @@ public abstract class Solution {
 
     protected abstract int partTwo(String input);
 
-    public void doPartOne(int iterations) {
+    public void doPartOne(int iterations) throws IOException {
         System.out.println("Executing Advent of Coding puzzle part one of December " + day + ", " + year + ".");
 
         execute(iterations, this::partOne);
     }
 
-    public void doPartTwo(int iterations) {
+    public void doPartTwo(int iterations) throws IOException {
         System.out.println("Executing Advent of Coding puzzle part two of December " + day + ", " + year + ".");
 
         execute(iterations, this::partTwo);
     }
 
-    private void execute(int iterations, SolutionRunnable e) {
+    private void execute(int iterations, SolutionRunnable e) throws IOException {
         var input = getInput();
 
         var startTimeNs = System.nanoTime();
@@ -52,11 +52,9 @@ public abstract class Solution {
         System.out.println("Average execution time over " + iterations + " iterations is " + ((endTimeNs - startTimeNs) / 1_000_000D / iterations) + "ms.");
     }
 
-    private String getInput() {
+    private String getInput() throws IOException {
         try (var stream = new FileInputStream("src/main/resources/inputs/" + year + "/" + day + ".txt")) {
             return new String(stream.readAllBytes());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
     }
 
@@ -73,23 +71,36 @@ public abstract class Solution {
             return;
         }
 
-        try (var writer = new FileWriter(file)) {
-            var sessionCookie = "";
+        var sessionCookie = ""; // gitignore
 
-            if (sessionCookie.isEmpty()) {
-                throw new RuntimeException("You need to insert your session cookie.");
-            }
+        if (sessionCookie.isEmpty()) {
+            throw new RuntimeException("You need to insert your session cookie.");
+        }
 
+        String result;
+
+        try {
             var url = new URL("https://adventofcode.com/" + year + "/day/" + day + "/input");
             System.out.println("Downloading the new input from " + url + ".");
 
-            var con = (HttpURLConnection) url.openConnection();
-            con.setRequestMethod("GET");
-            con.setDoOutput(true);
-            con.setRequestProperty("Cookie", "session=" + sessionCookie);
+            var connection = (HttpURLConnection) url.openConnection();
 
-            writer.write(new String(con.getInputStream().readAllBytes()));
+            connection.setRequestMethod("GET");
+            connection.setDoOutput(true);
+            connection.setRequestProperty("Cookie", "session=" + sessionCookie);
+
+            result = new String(connection.getInputStream().readAllBytes());
         } catch (IOException e) {
+            System.out.println("Downloading of input failed!");
+            e.printStackTrace();
+            return;
+        }
+
+        try (var writer = new FileWriter(file)) {
+            writer.write(result);
+            System.out.println("Downloading of input succeeded!");
+        } catch (IOException e) {
+            System.out.println("Downloading of input failed!");
             e.printStackTrace();
         }
     }

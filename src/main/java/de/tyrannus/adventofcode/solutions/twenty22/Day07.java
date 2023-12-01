@@ -5,10 +5,10 @@ import main.java.de.tyrannus.adventofcode.solutions.Solution;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Day7 extends Solution {
+public class Day07 extends Solution {
     private static final Directory ROOT = new Directory("/", null);
 
-    public Day7() {
+    public Day07() {
         super(2022, 7);
     }
 

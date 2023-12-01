@@ -10,4 +10,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="JavaRuntime" level="project" />
   </component>
+  <component name="SonarLintModuleSettings">
+    <option name="uniqueId" value="2d3cdaee-d6e9-4b88-9800-d63105fbdb78" />
+  </component>
 </module>
