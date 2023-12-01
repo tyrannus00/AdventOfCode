@@ -1,5 +1,7 @@
 package main.java.de.tyrannus.adventofcode.solutions;
 
+import main.java.de.tyrannus.adventofcode.secrets.SessionCookie;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
