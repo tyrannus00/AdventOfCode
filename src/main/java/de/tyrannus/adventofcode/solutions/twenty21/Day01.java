@@ -4,9 +4,9 @@ import main.java.de.tyrannus.adventofcode.solutions.Solution;
 
 import java.util.Arrays;
 
-public class Day1 extends Solution {
+public class Day01 extends Solution {
 
-    public Day1() {
+    public Day01() {
         super(2021, 1);
     }
 

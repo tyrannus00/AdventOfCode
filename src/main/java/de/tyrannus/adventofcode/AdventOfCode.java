@@ -1,21 +1,14 @@
 package main.java.de.tyrannus.adventofcode;
 
-import main.java.de.tyrannus.adventofcode.solutions.twenty22.*;
+import main.java.de.tyrannus.adventofcode.solutions.twenty23.Day01;
+
+import java.io.IOException;
 
 public class AdventOfCode {
 
-    public static void main(String[] args) {
-        var dayOne = new Day1();
-        var dayTwo = new Day2();
-        var dayThree = new Day3();
-        var dayFour = new Day4();
-        var dayFive = new Day5();
-        var daySix = new Day6();
-        var daySeven = new Day7();
-        var dayEight = new Day8();
-        var dayNine = new Day9();
-        var dayTen = new Day10();
+    public static void main(String[] args) throws IOException {
+//        Solution.generateInput(2023, 1);
 
-        dayTen.doPartOne(1);
+        new Day01().doPartTwo(1);
     }
 }
