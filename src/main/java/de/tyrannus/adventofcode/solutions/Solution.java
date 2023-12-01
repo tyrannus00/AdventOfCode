@@ -71,11 +71,7 @@ public abstract class Solution {
             return;
         }
 
-        var sessionCookie = ""; // gitignore
-
-        if (sessionCookie.isEmpty()) {
-            throw new RuntimeException("You need to insert your session cookie.");
-        }
+        var sessionCookie = SessionCookie.get();
 
         String result;
 
