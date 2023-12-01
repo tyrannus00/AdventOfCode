@@ -23,4 +23,5 @@
 hs_err_pid*
 /out/
 /src/main/resources/inputs/
+/src/main/java/de/tyrannus/adventofcode/secrets/
 /.idea/
