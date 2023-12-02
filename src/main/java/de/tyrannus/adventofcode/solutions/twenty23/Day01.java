@@ -6,6 +6,8 @@ import java.util.Arrays;
 
 public class Day01 extends Solution {
 
+    private final String[] numbers = new String[]{"one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};
+
     public Day01() {
         super(2023, 1);
     }
@@ -15,35 +17,33 @@ public class Day01 extends Solution {
         var lines = Arrays.stream(input.split("\n")).map(String::toCharArray).toList();
 
         var sum = 0;
+        int character;
+        char[] line;
 
-        for (var line : lines) {
-            var firstNumber = '-';
+        lines:
+        for (var i = 0; i < lines.size(); i++) {
+            line = lines.get(i);
 
-            for (var c : line) {
-                if (Character.isDigit(c)) {
-                    firstNumber = c;
-                    break;
+            for (var j = 0; j < line.length; j++) {
+                character = line[j];
+
+                if (character < 58) {
+                    sum += (character + 16 & 31) * 10;
+
+                    for (var k = line.length - 1; k >= 0; k--) {
+                        character = line[k];
+
+                        if (character < 58) {
+                            sum += character + 16 & 31;
+                            continue lines;
+                        }
+                    }
                 }
             }
-
-            var lastNumber = '-';
-
-            for (var i = line.length - 1; i >= 0; i--) {
-                var c = line[i];
-
-                if (Character.isDigit(c)) {
-                    lastNumber = c;
-                    break;
-                }
-            }
-
-            sum += Integer.parseInt("" + firstNumber + lastNumber);
         }
 
         return sum;
     }
-
-    private final String[] numbers = new String[]{"zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};
 
     @Override
     protected int partTwo(String input) {
@@ -83,16 +83,16 @@ public class Day01 extends Solution {
     private char getDigit(int index, char[] line) {
         var startChar = line[index];
 
-        if (Character.isDigit(startChar)) {
+        if (startChar < 58) {
             return startChar;
         }
 
         var string = new String(line);
 
-        for (var i = 0; i < 10; i++) {
+        for (var i = 0; i < 9; i++) {
             var number = numbers[i];
             if (string.startsWith(number, index)) {
-                return Integer.toString(i).charAt(0);
+                return Integer.toString(i + 1).charAt(0);
             }
         }
 
