@@ -10,6 +10,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.List;
 
 public abstract class Solution {
     private final int year, day;
@@ -24,6 +26,10 @@ public abstract class Solution {
     protected abstract int partOne(String input);
 
     protected abstract int partTwo(String input);
+
+    protected List<String> inputToList(String input) {
+        return Arrays.stream(input.split("\n")).toList();
+    }
 
     public void doPartOne(int iterations) throws IOException {
         System.out.println("Executing Advent of Coding puzzle part one of December " + day + ", " + year + ".");

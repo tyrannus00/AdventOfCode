@@ -13,7 +13,7 @@ public class Day03 extends Solution {
 
     @Override
     protected int partOne(String input) {
-        var lines = Arrays.stream(input.split("\n")).toList();
+        var lines = inputToList(input);
 
         var sum = 0;
 
