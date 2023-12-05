@@ -4,7 +4,7 @@ import main.java.de.tyrannus.adventofcode.solutions.Solution;
 
 import java.util.Arrays;
 
-public class Day01 extends Solution {
+public class Day01 extends Solution<Integer>{
 
     private final String[] numbers = new String[]{"one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};
 
@@ -13,7 +13,7 @@ public class Day01 extends Solution {
     }
 
     @Override
-    protected int partOne(String input) {
+    public Integer partOne(String input) {
         var lines = Arrays.stream(input.split("\n")).map(String::toCharArray).toList();
 
         var sum = 0;
@@ -46,7 +46,7 @@ public class Day01 extends Solution {
     }
 
     @Override
-    protected int partTwo(String input) {
+    public Integer partTwo(String input) {
         var lines = Arrays.stream(input.split("\n")).map(String::toCharArray).toList();
 
         var sum = 0;

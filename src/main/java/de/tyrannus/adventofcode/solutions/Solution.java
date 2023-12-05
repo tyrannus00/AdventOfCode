@@ -7,13 +7,13 @@ import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.net.URL;
+import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 
-public abstract class Solution {
+public abstract class Solution<T> {
     private final int year, day;
 
     protected Solution(int year, int day) {
@@ -23,9 +23,9 @@ public abstract class Solution {
         generateInput(year, day);
     }
 
-    protected abstract int partOne(String input);
+    protected abstract T partOne(String input);
 
-    protected abstract int partTwo(String input);
+    protected abstract T partTwo(String input);
 
     protected List<String> inputToList(String input) {
         return Arrays.stream(input.split("\n")).toList();
@@ -43,11 +43,11 @@ public abstract class Solution {
         execute(iterations, this::partTwo);
     }
 
-    private void execute(int iterations, SolutionRunnable e) throws IOException {
+    private void execute(int iterations, SolutionRunnable<T> e) throws IOException {
         var input = getInput();
+        T output = null;
 
         var startTimeNs = System.nanoTime();
-        var output = 0;
 
         for (var i = 0; i < iterations; i++) {
             output = e.run(input);
@@ -56,7 +56,6 @@ public abstract class Solution {
         var endTimeNs = System.nanoTime();
 
         System.out.println("The solution is: " + output);
-
         System.out.println("Average execution time over " + iterations + " iterations is " + ((endTimeNs - startTimeNs) / 1_000_000D / iterations) + "ms.");
     }
 
@@ -84,7 +83,7 @@ public abstract class Solution {
         String result;
 
         try {
-            var url = new URL("https://adventofcode.com/" + year + "/day/" + day + "/input");
+            var url = URI.create("https://adventofcode.com/" + year + "/day/" + day + "/input").toURL();
             System.out.println("Downloading the new input from " + url + ".");
 
             var connection = (HttpURLConnection) url.openConnection();
@@ -109,7 +108,7 @@ public abstract class Solution {
         }
     }
 
-    private interface SolutionRunnable {
-        int run(String input);
+    private interface SolutionRunnable<T> {
+        T run(String input);
     }
 }

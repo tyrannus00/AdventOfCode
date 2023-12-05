@@ -4,14 +4,14 @@ import main.java.de.tyrannus.adventofcode.solutions.Solution;
 
 import java.util.Arrays;
 
-public class Day02 extends Solution {
+public class Day02 extends Solution<Integer>{
 
     public Day02() {
         super(2023, 2);
     }
 
     @Override
-    protected int partOne(String input) {
+    public Integer partOne(String input) {
         var lines = Arrays.stream(input.split("\n")).toList();
 
         var validGameIdsSum = 0;
@@ -55,7 +55,7 @@ public class Day02 extends Solution {
     }
 
     @Override
-    protected int partTwo(String input) {
+    public Integer partTwo(String input) {
         var lines = Arrays.stream(input.split("\n")).toList();
 
         var sumOfPowers = 0;

@@ -5,7 +5,7 @@ import main.java.de.tyrannus.adventofcode.solutions.Solution;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Day07 extends Solution {
+public class Day07 extends Solution<Integer>{
     private static final Directory ROOT = new Directory("/", null);
 
     public Day07() {
@@ -13,7 +13,7 @@ public class Day07 extends Solution {
     }
 
     @Override
-    protected int partOne(String input) {
+    public Integer partOne(String input) {
         var allDirs = parseInputs(input);
 
         var size = 0;
@@ -30,7 +30,7 @@ public class Day07 extends Solution {
     }
 
     @Override
-    protected int partTwo(String input) {
+    public Integer partTwo(String input) {
         var allDirs = parseInputs(input);
 
         var rootSize = ROOT.getSizeUncapped();

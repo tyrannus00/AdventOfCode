@@ -4,13 +4,13 @@ import main.java.de.tyrannus.adventofcode.solutions.Solution;
 
 import java.util.Arrays;
 
-public class Day02 extends Solution {
+public class Day02 extends Solution<Integer>{
     public Day02() {
         super(2022, 2);
     }
 
     @Override
-    public int partOne(String input) {
+    public Integer partOne(String input) {
         var matchups = Arrays.stream(input.split("\r\n")).map(s -> {
             var chars = s.toCharArray();
 
@@ -26,7 +26,7 @@ public class Day02 extends Solution {
     }
 
     @Override
-    public int partTwo(String input) {
+    public Integer partTwo(String input) {
         var matchups = Arrays.stream(input.split("\r\n")).map(s -> new Matchup(s.toCharArray())).toList();
 
         var score = 0;

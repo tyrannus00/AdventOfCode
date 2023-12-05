@@ -5,14 +5,14 @@ import main.java.de.tyrannus.adventofcode.solutions.Solution;
 import java.util.Arrays;
 import java.util.List;
 
-public class Day03 extends Solution {
+public class Day03 extends Solution<Integer>{
 
     public Day03() {
         super(2023, 3);
     }
 
     @Override
-    protected int partOne(String input) {
+    public Integer partOne(String input) {
         var lines = inputToList(input);
 
         var sum = 0;
@@ -47,7 +47,7 @@ public class Day03 extends Solution {
     }
 
     @Override
-    protected int partTwo(String input) {
+    public Integer partTwo(String input) {
         var lines = Arrays.stream(input.split("\n")).toList();
 
         int[][] map = new int[lines.size()][lines.get(0).length()];

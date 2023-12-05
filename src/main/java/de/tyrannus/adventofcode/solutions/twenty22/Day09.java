@@ -4,18 +4,18 @@ import main.java.de.tyrannus.adventofcode.solutions.Solution;
 
 import java.util.HashSet;
 
-public class Day09 extends Solution {
+public class Day09 extends Solution<Integer>{
     public Day09() {
         super(2022, 9);
     }
 
     @Override
-    protected int partOne(String input) {
+    public Integer partOne(String input) {
         return simulate(2, input.split("\n"));
     }
 
     @Override
-    protected int partTwo(String input) {
+    public Integer partTwo(String input) {
         return simulate(10, input.split("\n"));
     }
 

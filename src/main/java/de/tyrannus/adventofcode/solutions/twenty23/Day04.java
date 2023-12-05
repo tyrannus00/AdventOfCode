@@ -5,14 +5,14 @@ import main.java.de.tyrannus.adventofcode.solutions.Solution;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Day04 extends Solution {
+public class Day04 extends Solution<Integer> {
 
     public Day04() {
         super(2023, 4);
     }
 
     @Override
-    protected int partOne(String input) {
+    public Integer partOne(String input) {
         var lines = inputToList(input);
 
         var totalPoints = 0;
@@ -46,7 +46,7 @@ public class Day04 extends Solution {
     }
 
     @Override
-    protected int partTwo(String input) {
+    public Integer partTwo(String input) {
         var lines = inputToList(input);
         var differentCards = lines.size();
 

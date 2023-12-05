@@ -5,14 +5,14 @@ import main.java.de.tyrannus.adventofcode.solutions.Solution;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Day05 extends Solution {
+public class Day05 extends Solution<Long> {
 
     public Day05() {
         super(2023, 5);
     }
 
     @Override
-    protected int partOne(String input) {
+    protected Long partOne(String input) {
         var lines = inputToList(input);
 
         var seeds = parseSeeds(lines);
@@ -32,12 +32,11 @@ public class Day05 extends Solution {
             }
         }
 
-        System.out.println(smallestLocation);
-        return 0;
+        return smallestLocation;
     }
 
     @Override
-    protected int partTwo(String input) {
+    protected Long partTwo(String input) {
         var lines = inputToList(input);
 
         var maps = parseMaps(lines);
@@ -46,12 +45,8 @@ public class Day05 extends Solution {
 
         var numbers = lines.getFirst().substring(7).split(" ");
 
-        for (var i = 0; i < numbers.length; i += 2) {
+        for (var i = 0; i < numbers.length - 1; i += 2) {
             var number = Long.parseLong(numbers[i]);
-
-            if (i == numbers.length - 2) {
-                break;
-            }
 
             var rangeLength = Long.parseLong(numbers[i + 1]);
 
@@ -68,8 +63,7 @@ public class Day05 extends Solution {
             }
         }
 
-        System.out.println(smallestLocation);
-        return 0;
+        return smallestLocation;
     }
 
     private List<Long> parseSeeds(List<String> lines) {

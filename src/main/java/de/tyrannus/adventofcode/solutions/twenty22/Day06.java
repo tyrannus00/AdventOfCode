@@ -4,13 +4,13 @@ import main.java.de.tyrannus.adventofcode.solutions.Solution;
 
 import java.util.HashSet;
 
-public class Day06 extends Solution {
+public class Day06 extends Solution<Integer>{
     public Day06() {
         super(2022, 6);
     }
 
 //    @Override
-//    protected int partOne(String input) {
+//    public Integer partOne(String input) {
 //        var list = input.chars().mapToObj(c -> (char) c).toList();
 //        var set = new HashSet<Character>(4);
 //
@@ -29,7 +29,7 @@ public class Day06 extends Solution {
 
 
     @Override
-    protected int partOne(String input) {
+    public Integer partOne(String input) {
         var charArray = input.toCharArray();
 
         for (var i = 3; i < charArray.length; i++) {
@@ -63,7 +63,7 @@ public class Day06 extends Solution {
     }
 
     @Override
-    protected int partTwo(String input) {
+    public Integer partTwo(String input) {
         var list = input.chars().mapToObj(c -> (char) c).toList();
         var set = new HashSet<Character>(14);
 

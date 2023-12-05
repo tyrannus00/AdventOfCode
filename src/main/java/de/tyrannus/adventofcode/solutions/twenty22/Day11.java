@@ -6,13 +6,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Day11 extends Solution {
+public class Day11 extends Solution<Integer>{
     public Day11() {
         super(2022, 11);
     }
 
     @Override
-    protected int partOne(String input) {
+    public Integer partOne(String input) {
         var monkeyArray = new Monkey[8];
 
         initMonkeys(monkeyArray, input.split("\n"));
@@ -43,7 +43,7 @@ public class Day11 extends Solution {
     }
 
     @Override
-    protected int partTwo(String input) {
+    public Integer partTwo(String input) {
         var monkeyArray = new Monkey[8];
 
         initMonkeys(monkeyArray, input.split("\n"));

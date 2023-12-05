@@ -5,13 +5,13 @@ import main.java.de.tyrannus.adventofcode.solutions.Solution;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Day05 extends Solution {
+public class Day05 extends Solution<Integer>{
     public Day05() {
         super(2022, 5);
     }
 
     @Override
-    protected int partOne(String input) {
+    public Integer partOne(String input) {
         var lines = input.split("\n");
 
         List<List<Character>> rows = new ArrayList<>(9);
@@ -32,7 +32,7 @@ public class Day05 extends Solution {
     }
 
     @Override
-    protected int partTwo(String input) {
+    public Integer partTwo(String input) {
         var lines = input.split("\n");
 
         List<List<Character>> rows = new ArrayList<>(9);

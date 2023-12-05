@@ -4,13 +4,13 @@ import main.java.de.tyrannus.adventofcode.solutions.Solution;
 
 import java.util.Arrays;
 
-public class Day01 extends Solution {
+public class Day01 extends Solution<Integer>{
     public Day01() {
         super(2022, 1);
     }
 
     @Override
-    public int partOne(String input) {
+    public Integer partOne(String input) {
         var calorieArray = Arrays.stream(input.split("\n")).mapToInt(s -> {
             if (s.isEmpty()) return 0;
             return Integer.parseInt(s);
@@ -34,7 +34,7 @@ public class Day01 extends Solution {
     }
 
     @Override
-    public int partTwo(String input) {
+    public Integer partTwo(String input) {
         var integerLines = Arrays.stream(input.split("\r\n")).mapToInt(s -> {
             if (s.isEmpty()) return 0;
             return Integer.parseInt(s);

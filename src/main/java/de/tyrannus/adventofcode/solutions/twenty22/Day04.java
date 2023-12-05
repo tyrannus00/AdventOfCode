@@ -2,13 +2,13 @@ package main.java.de.tyrannus.adventofcode.solutions.twenty22;
 
 import main.java.de.tyrannus.adventofcode.solutions.Solution;
 
-public class Day04 extends Solution {
+public class Day04 extends Solution<Integer>{
     public Day04() {
         super(2022, 4);
     }
 
     @Override
-    protected int partOne(String input) {
+    public Integer partOne(String input) {
         var pairs = input.split("\r\n");
         var encapsulatedElfs = 0;
 
@@ -36,7 +36,7 @@ public class Day04 extends Solution {
 
 
     @Override
-    protected int partTwo(String input) {
+    public Integer partTwo(String input) {
 
         var pairs = input.split("\n");
         var encapsulatedElfs = 0;

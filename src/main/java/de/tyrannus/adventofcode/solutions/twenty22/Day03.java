@@ -2,7 +2,7 @@ package main.java.de.tyrannus.adventofcode.solutions.twenty22;
 
 import main.java.de.tyrannus.adventofcode.solutions.Solution;
 
-public class Day03 extends Solution {
+public class Day03 extends Solution<Integer>{
 
     private static final String PRIORITIES = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
@@ -11,7 +11,7 @@ public class Day03 extends Solution {
     }
 
     @Override
-    protected int partOne(String input) {
+    public Integer partOne(String input) {
         var split = input.split("\n");
 
         var totalValue = 0;
@@ -24,7 +24,7 @@ public class Day03 extends Solution {
     }
 
     @Override
-    protected int partTwo(String input) {
+    public Integer partTwo(String input) {
         var split = input.split("\n");
 
         var totalValue = 0;
