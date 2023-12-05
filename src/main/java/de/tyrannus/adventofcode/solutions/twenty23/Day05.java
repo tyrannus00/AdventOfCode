@@ -38,18 +38,49 @@ public class Day05 extends Solution {
 
     @Override
     protected int partTwo(String input) {
+        var lines = inputToList(input);
+
+        var maps = parseMaps(lines);
+
+        var smallestLocation = Long.MAX_VALUE;
+
+        var numbers = lines.getFirst().substring(7).split(" ");
+
+        for (var i = 0; i < numbers.length; i += 2) {
+            var number = Long.parseLong(numbers[i]);
+
+            if (i == numbers.length - 2) {
+                break;
+            }
+
+            var rangeLength = Long.parseLong(numbers[i + 1]);
+
+            for (var seed = number; seed < number + rangeLength; seed++) {
+                var previousValue = seed;
+
+                for (var map : maps) {
+                    previousValue = map.getDestination(previousValue);
+                }
+
+                if (previousValue < smallestLocation) {
+                    smallestLocation = previousValue;
+                }
+            }
+        }
+
+        System.out.println(smallestLocation);
         return 0;
     }
 
     private List<Long> parseSeeds(List<String> lines) {
         var seeds = new ArrayList<Long>();
 
-        // Parsing seeds
-        var split = lines.getFirst().substring(7).split(" ");
+        var numbers = lines.getFirst().substring(7).split(" ");
 
-        for (var num : split) {
-            seeds.add(Long.parseLong(num));
+        for (var number : numbers) {
+            seeds.add(Long.parseLong(number));
         }
+
 
         return seeds;
     }
@@ -57,7 +88,6 @@ public class Day05 extends Solution {
     private List<Map> parseMaps(List<String> lines) {
         var maps = new ArrayList<Map>(7);
 
-        // Parsing maps
         for (var i = 2; i < lines.size(); i++) {
             var line = lines.get(i);
 
