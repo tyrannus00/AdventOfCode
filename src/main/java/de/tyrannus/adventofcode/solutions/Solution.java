@@ -1,7 +1,5 @@
 package main.java.de.tyrannus.adventofcode.solutions;
 
-import main.java.de.tyrannus.adventofcode.secrets.SessionCookie;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
@@ -12,8 +10,14 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
+import java.util.MissingFormatArgumentException;
 
 public abstract class Solution<T> {
+
+    private static final String PATH = "adventofcode";
+    private static final String INPUTS_PATH = PATH + "/inputs/";
+    private static final String COOKIE_PATH = PATH + "/sessioncookie.txt";
+
     private final int year, day;
 
     protected Solution(int year, int day) {
@@ -23,62 +27,19 @@ public abstract class Solution<T> {
         generateInput(year, day);
     }
 
-    protected abstract T partOne(String input);
-
-    protected abstract T partTwo(String input);
-
-    protected List<String> inputToList(String input) {
-        return Arrays.stream(input.split("\n")).toList();
-    }
-
-    public void doPartOne(int iterations) throws IOException {
-        System.out.println("Executing Advent of Coding puzzle part one of December " + day + ", " + year + ".");
-
-        execute(iterations, this::partOne);
-    }
-
-    public void doPartTwo(int iterations) throws IOException {
-        System.out.println("Executing Advent of Coding puzzle part two of December " + day + ", " + year + ".");
-
-        execute(iterations, this::partTwo);
-    }
-
-    private void execute(int iterations, SolutionRunnable<T> e) throws IOException {
-        var input = getInput();
-        T output = null;
-
-        var startTimeNs = System.nanoTime();
-
-        for (var i = 0; i < iterations; i++) {
-            output = e.run(input);
-        }
-
-        var endTimeNs = System.nanoTime();
-
-        System.out.println("The solution is: " + output);
-        System.out.println("Average execution time over " + iterations + " iterations is " + ((endTimeNs - startTimeNs) / 1_000_000D / iterations) + "ms.");
-    }
-
-    private String getInput() throws IOException {
-        try (var stream = new FileInputStream("src/main/resources/inputs/" + year + "/" + day + ".txt")) {
-            return new String(stream.readAllBytes());
-        }
-    }
-
     public static void generateInput(int year, int day) {
         try {
-            Files.createDirectories(Paths.get("src/main/resources/inputs/" + year));
+            Files.createDirectories(Paths.get(INPUTS_PATH + year));
         } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        var file = new File("src/main/resources/inputs/" + year + "/" + day + ".txt");
-
-        if (file.exists()) {
+            e.printStackTrace();
             return;
         }
 
-        var sessionCookie = SessionCookie.get();
+        var inputFile = new File(INPUTS_PATH + year + "/" + day + ".txt");
+
+        if (inputFile.exists()) {
+            return;
+        }
 
         String result;
 
@@ -90,25 +51,71 @@ public abstract class Solution<T> {
 
             connection.setRequestMethod("GET");
             connection.setDoOutput(true);
-            connection.setRequestProperty("Cookie", "session=" + sessionCookie);
+            connection.setRequestProperty("Cookie", "session=" + getSessionCookie());
+
+            if (connection.getResponseCode() == 500) {
+                throw new IllegalArgumentException("Invalid session cookie!");
+            }
 
             result = new String(connection.getInputStream().readAllBytes());
         } catch (IOException e) {
-            System.out.println("Downloading of input failed!");
-            e.printStackTrace();
-            return;
+            throw new IllegalStateException("Download of input failed for unknown reasons!");
         }
 
-        try (var writer = new FileWriter(file)) {
+        try (var writer = new FileWriter(inputFile)) {
             writer.write(result);
-            System.out.println("Downloading of input succeeded!");
+            System.out.println("Download of input succeeded!");
         } catch (IOException e) {
-            System.out.println("Downloading of input failed!");
-            e.printStackTrace();
+            throw new IllegalStateException("Writing of input to file failed for unknown reasons!");
         }
     }
 
-    private interface SolutionRunnable<T> {
-        T run(String input);
+    private static String getSessionCookie() {
+        try (var stream = new FileInputStream(COOKIE_PATH)) {
+            return new String(stream.readAllBytes());
+        } catch (IOException e) {
+            throw new MissingFormatArgumentException("You need to create a file called \"sessioncookie.txt\" in the " + PATH + " folder, and insert your session cookie!");
+        }
+    }
+
+    protected abstract T partOne(String input);
+
+    protected abstract T partTwo(String input);
+
+    protected List<String> inputToStringList(String input) {
+        return Arrays.stream(input.split("\n")).toList();
+    }
+
+    protected List<char[]> inputToCharArrayList(String input) {
+        return Arrays.stream(input.split("\n")).map(String::toCharArray).toList();
+    }
+
+    public void execute(int part, int iterations) throws IOException {
+        System.out.println("Executing Advent of Coding puzzle part " + part + " of December " + day + ", " + year + ".");
+
+        SolutionCalculator<T> solutionCalculator = part == 1 ? this::partOne : this::partTwo;
+        var input = getInput();
+        T output = null;
+
+        var startTimeNs = System.nanoTime();
+
+        for (var i = 0; i < iterations; i++) {
+            output = solutionCalculator.calculate(input);
+        }
+
+        var endTimeNs = System.nanoTime();
+
+        System.out.println("The solution is: " + output);
+        System.out.println("Average execution time over " + iterations + " iterations is " + ((endTimeNs - startTimeNs) / 1_000_000D / iterations) + "ms.");
+    }
+
+    private String getInput() throws IOException {
+        try (var stream = new FileInputStream(INPUTS_PATH + year + "/" + day + ".txt")) {
+            return new String(stream.readAllBytes());
+        }
+    }
+
+    private interface SolutionCalculator<T> {
+        T calculate(String input);
     }
 }

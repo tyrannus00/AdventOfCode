@@ -2,7 +2,7 @@ package main.java.de.tyrannus.adventofcode.solutions.twenty22;
 
 import main.java.de.tyrannus.adventofcode.solutions.Solution;
 
-public class Day03 extends Solution<Integer>{
+public class Day03 extends Solution<Integer> {
 
     private static final String PRIORITIES = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 

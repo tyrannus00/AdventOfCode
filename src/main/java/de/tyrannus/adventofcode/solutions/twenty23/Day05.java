@@ -13,7 +13,7 @@ public class Day05 extends Solution<Long> {
 
     @Override
     protected Long partOne(String input) {
-        var lines = inputToList(input);
+        var lines = inputToStringList(input);
 
         var seeds = parseSeeds(lines);
         var maps = parseMaps(lines);
@@ -37,7 +37,7 @@ public class Day05 extends Solution<Long> {
 
     @Override
     protected Long partTwo(String input) {
-        var lines = inputToList(input);
+        var lines = inputToStringList(input);
 
         var maps = parseMaps(lines);
 

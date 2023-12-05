@@ -4,7 +4,8 @@ import main.java.de.tyrannus.adventofcode.solutions.Solution;
 
 import java.util.Arrays;
 
-public class Day01 extends Solution<Integer>{
+public class Day01 extends Solution<Integer> {
+
     public Day01() {
         super(2022, 1);
     }
@@ -35,7 +36,7 @@ public class Day01 extends Solution<Integer>{
 
     @Override
     public Integer partTwo(String input) {
-        var integerLines = Arrays.stream(input.split("\r\n")).mapToInt(s -> {
+        var integerLines = Arrays.stream(input.split("\n")).mapToInt(s -> {
             if (s.isEmpty()) return 0;
             return Integer.parseInt(s);
         }).toArray();

@@ -2,7 +2,8 @@ package main.java.de.tyrannus.adventofcode.solutions.twenty21;
 
 import main.java.de.tyrannus.adventofcode.solutions.Solution;
 
-public class Day02 extends Solution<Integer>{
+public class Day02 extends Solution<Integer> {
+
     public Day02() {
         super(2021, 2);
     }

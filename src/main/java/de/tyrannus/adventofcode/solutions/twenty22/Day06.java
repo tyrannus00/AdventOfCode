@@ -4,7 +4,8 @@ import main.java.de.tyrannus.adventofcode.solutions.Solution;
 
 import java.util.HashSet;
 
-public class Day06 extends Solution<Integer>{
+public class Day06 extends Solution<Integer> {
+
     public Day06() {
         super(2022, 6);
     }

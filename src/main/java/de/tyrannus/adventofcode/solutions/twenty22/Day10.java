@@ -2,7 +2,8 @@ package main.java.de.tyrannus.adventofcode.solutions.twenty22;
 
 import main.java.de.tyrannus.adventofcode.solutions.Solution;
 
-public class Day10 extends Solution<Integer>{
+public class Day10 extends Solution<Integer> {
+
     public Day10() {
         super(2022, 10);
     }
@@ -31,7 +32,6 @@ public class Day10 extends Solution<Integer>{
             }
 
 
-
             //During
 
             executionTimeLeft--;
@@ -39,7 +39,6 @@ public class Day10 extends Solution<Integer>{
             if ((cycle + 20) % 40 == 0) {
                 values[(cycle + 20) / 40 - 1] = currentX * cycle;
             }
-
 
 
             //End
@@ -80,7 +79,6 @@ public class Day10 extends Solution<Integer>{
             }
 
 
-
             //During
 
             executionTimeLeft--;
@@ -97,7 +95,6 @@ public class Day10 extends Solution<Integer>{
             if (cycle % 40 == 0) {
                 System.out.println();
             }
-
 
 
             //End

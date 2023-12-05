@@ -4,7 +4,8 @@ import main.java.de.tyrannus.adventofcode.solutions.Solution;
 
 import java.util.HashSet;
 
-public class Day09 extends Solution<Integer>{
+public class Day09 extends Solution<Integer> {
+
     public Day09() {
         super(2022, 9);
     }
@@ -64,12 +65,6 @@ public class Day09 extends Solution<Integer>{
         return value;
     }
 
-    private record Pos(int x, int y) {
-        Pos(int[] array) {
-            this(array[0], array[1]);
-        }
-    }
-
     private void printPositions(HashSet<Pos> tailTouchedPositions, int[] headPos) {
         int minX = 0, minY = 0, maxX = 0, maxY = 0;
 
@@ -106,6 +101,12 @@ public class Day09 extends Solution<Integer>{
                 }
             }
             System.out.println();
+        }
+    }
+
+    private record Pos(int x, int y) {
+        Pos(int[] array) {
+            this(array[0], array[1]);
         }
     }
 }

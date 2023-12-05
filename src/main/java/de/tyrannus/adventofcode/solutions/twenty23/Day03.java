@@ -2,10 +2,9 @@ package main.java.de.tyrannus.adventofcode.solutions.twenty23;
 
 import main.java.de.tyrannus.adventofcode.solutions.Solution;
 
-import java.util.Arrays;
 import java.util.List;
 
-public class Day03 extends Solution<Integer>{
+public class Day03 extends Solution<Integer> {
 
     public Day03() {
         super(2023, 3);
@@ -13,7 +12,7 @@ public class Day03 extends Solution<Integer>{
 
     @Override
     public Integer partOne(String input) {
-        var lines = inputToList(input);
+        var lines = inputToStringList(input);
 
         var sum = 0;
 
@@ -48,7 +47,7 @@ public class Day03 extends Solution<Integer>{
 
     @Override
     public Integer partTwo(String input) {
-        var lines = Arrays.stream(input.split("\n")).toList();
+        var lines = inputToStringList(input);
 
         int[][] map = new int[lines.size()][lines.get(0).length()];
 
@@ -191,9 +190,7 @@ public class Day03 extends Solution<Integer>{
         }
 
         if (lineNumber < lines.size() - 1) {
-            if (containsSymbol(lines.get(lineNumber + 1).substring(firstCheckIndex, lastCheckIndex))) {
-                return true;
-            }
+            return containsSymbol(lines.get(lineNumber + 1).substring(firstCheckIndex, lastCheckIndex));
         }
 
         return false;

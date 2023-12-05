@@ -6,7 +6,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Day11 extends Solution<Integer>{
+public class Day11 extends Solution<Integer> {
+
     public Day11() {
         super(2022, 11);
     }
@@ -108,6 +109,12 @@ public class Day11 extends Solution<Integer>{
         }
     }
 
+    private enum Operation {
+        PRODUCT,
+        SUM,
+        SQUARE
+    }
+
     private static class Monkey {
         final long testNumber, operationNumber;
         final int monkeyNumberTrue, monkeyNumberFalse;
@@ -155,12 +162,6 @@ public class Day11 extends Solution<Integer>{
         public long getTimesInspected() {
             return timesInspected;
         }
-    }
-
-    private enum Operation {
-        PRODUCT,
-        SUM,
-        SQUARE
     }
 
 }

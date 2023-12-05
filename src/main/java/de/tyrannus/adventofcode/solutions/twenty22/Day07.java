@@ -5,7 +5,7 @@ import main.java.de.tyrannus.adventofcode.solutions.Solution;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Day07 extends Solution<Integer>{
+public class Day07 extends Solution<Integer> {
     private static final Directory ROOT = new Directory("/", null);
 
     public Day07() {
@@ -118,7 +118,6 @@ public class Day07 extends Solution<Integer>{
         }
 
         /**
-         *
          * @return Won't continue calculating size, if it already exceeded 100k.
          */
         public int getSizeCapped() {

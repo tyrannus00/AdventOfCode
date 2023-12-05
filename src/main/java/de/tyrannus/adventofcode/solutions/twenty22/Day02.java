@@ -4,14 +4,15 @@ import main.java.de.tyrannus.adventofcode.solutions.Solution;
 
 import java.util.Arrays;
 
-public class Day02 extends Solution<Integer>{
+public class Day02 extends Solution<Integer> {
+
     public Day02() {
         super(2022, 2);
     }
 
     @Override
     public Integer partOne(String input) {
-        var matchups = Arrays.stream(input.split("\r\n")).map(s -> {
+        var matchups = Arrays.stream(input.split("\n")).map(s -> {
             var chars = s.toCharArray();
 
             return new Matchup(chars[0], chars[2]);
@@ -27,7 +28,7 @@ public class Day02 extends Solution<Integer>{
 
     @Override
     public Integer partTwo(String input) {
-        var matchups = Arrays.stream(input.split("\r\n")).map(s -> new Matchup(s.toCharArray())).toList();
+        var matchups = Arrays.stream(input.split("\n")).map(s -> new Matchup(s.toCharArray())).toList();
 
         var score = 0;
         for (var match : matchups) {
@@ -37,8 +38,16 @@ public class Day02 extends Solution<Integer>{
         return score;
     }
 
+    interface Material {
+        int getValue();
+
+        int compare(Material enemy);
+
+        Material react(char letter);
+    }
+
     static class Matchup {
-        Material enemy, you;
+        final Material enemy, you;
 
         Matchup(char enemy, char you) {
             this.enemy = get(enemy);
@@ -50,16 +59,16 @@ public class Day02 extends Solution<Integer>{
             this.you = this.enemy.react(chars[2]);
         }
 
-        int score() {
-            return you.getValue() + you.compare(enemy);
-        }
-
         static Material get(char letter) {
             return switch (letter) {
                 case 'A', 'X' -> new Rock();
                 case 'B', 'Y' -> new Paper();
                 default -> new Scissors();
             };
+        }
+
+        int score() {
+            return you.getValue() + you.compare(enemy);
         }
     }
 
@@ -148,13 +157,5 @@ public class Day02 extends Solution<Integer>{
                 return new Rock();
             }
         }
-    }
-
-    interface Material {
-        int getValue();
-
-        int compare(Material enemy);
-
-        Material react(char letter);
     }
 }

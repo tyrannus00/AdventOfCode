@@ -2,9 +2,7 @@ package main.java.de.tyrannus.adventofcode.solutions.twenty23;
 
 import main.java.de.tyrannus.adventofcode.solutions.Solution;
 
-import java.util.Arrays;
-
-public class Day02 extends Solution<Integer>{
+public class Day02 extends Solution<Integer> {
 
     public Day02() {
         super(2023, 2);
@@ -12,7 +10,7 @@ public class Day02 extends Solution<Integer>{
 
     @Override
     public Integer partOne(String input) {
-        var lines = Arrays.stream(input.split("\n")).toList();
+        var lines = inputToStringList(input);
 
         var validGameIdsSum = 0;
 
@@ -56,7 +54,7 @@ public class Day02 extends Solution<Integer>{
 
     @Override
     public Integer partTwo(String input) {
-        var lines = Arrays.stream(input.split("\n")).toList();
+        var lines = inputToStringList(input);
 
         var sumOfPowers = 0;
 

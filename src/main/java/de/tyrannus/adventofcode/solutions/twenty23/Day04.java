@@ -11,9 +11,32 @@ public class Day04 extends Solution<Integer> {
         super(2023, 4);
     }
 
+    private static int getAnInt(int[] originalCardsWinAmounts) {
+        var cards = new ArrayList<Integer>(originalCardsWinAmounts.length);
+        var amount = 0;
+
+        // fill original cards
+        for (var i = 0; i < originalCardsWinAmounts.length; i++) {
+            cards.add(i);
+        }
+
+        while (!cards.isEmpty()) {
+            amount++;
+
+            int card = cards.remove(0);
+            var wins = originalCardsWinAmounts[card];
+
+            for (var j = 0; j < wins; j++) {
+                cards.add(card + j + 1);
+            }
+        }
+
+        return amount;
+    }
+
     @Override
     public Integer partOne(String input) {
-        var lines = inputToList(input);
+        var lines = inputToStringList(input);
 
         var totalPoints = 0;
 
@@ -47,7 +70,7 @@ public class Day04 extends Solution<Integer> {
 
     @Override
     public Integer partTwo(String input) {
-        var lines = inputToList(input);
+        var lines = inputToStringList(input);
         var differentCards = lines.size();
 
         var originalCardsWinAmounts = new int[differentCards];
@@ -96,7 +119,7 @@ public class Day04 extends Solution<Integer> {
      * 1_219_270 ms runtime.
      */
     protected int guh(String input) {
-        var lines = inputToList(input);
+        var lines = inputToStringList(input);
 
         var originalCardsWinAmounts = new int[lines.size()];
 
@@ -120,28 +143,5 @@ public class Day04 extends Solution<Integer> {
         }
 
         return getAnInt(originalCardsWinAmounts);
-    }
-
-    private static int getAnInt(int[] originalCardsWinAmounts) {
-        var cards = new ArrayList<Integer>(originalCardsWinAmounts.length);
-        var amount = 0;
-
-        // fill original cards
-        for (var i = 0; i < originalCardsWinAmounts.length; i++) {
-            cards.add(i);
-        }
-
-        while (!cards.isEmpty()) {
-            amount++;
-
-            int card = cards.remove(0);
-            var wins = originalCardsWinAmounts[card];
-
-            for (var j = 0; j < wins; j++) {
-                cards.add(card + j + 1);
-            }
-        }
-
-        return amount;
     }
 }
