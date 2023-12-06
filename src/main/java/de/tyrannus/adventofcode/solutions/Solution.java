@@ -20,7 +20,7 @@ public abstract class Solution<T> {
 
     private final int year, day;
 
-    protected Solution(int year, int day) {
+    public Solution(int year, int day) {
         this.year = year;
         this.day = day;
 
