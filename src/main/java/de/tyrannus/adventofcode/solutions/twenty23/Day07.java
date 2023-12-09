@@ -33,8 +33,8 @@ public class Day07 extends Solution<Integer> {
             hands.add(Hand.parse(line, true));
         }
 
-        hands.sort(Comparator.comparingInt(value -> value.numericValue));
-        hands.sort(Comparator.comparingInt(value -> value.type));
+        hands.sort(Comparator.comparingInt(hand -> hand.numericValue));
+        hands.sort(Comparator.comparingInt(hand -> hand.type));
 
         var winnings = 0;
 
@@ -56,8 +56,8 @@ public class Day07 extends Solution<Integer> {
             hands.add(Hand.parse(line, false));
         }
 
-        hands.sort(Comparator.comparingInt(value -> value.numericValue));
-        hands.sort(Comparator.comparingInt(value -> value.type));
+        hands.sort(Comparator.comparingInt(hand -> hand.numericValue));
+        hands.sort(Comparator.comparingInt(hand -> hand.type));
 
         var winnings = 0;
 
