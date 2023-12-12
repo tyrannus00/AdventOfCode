@@ -20,7 +20,7 @@ public class Day10 extends Solution<Integer> {
     private static final Vec[] OFFSETS = new Vec[4];
     private static final Map<Character, byte[]> pipeShapes = new HashMap<>();
 
-    static {    // 414 too high
+    static {    // 414 too high // 413 it is
         pipeShapes.put('|', new byte[]{MOVE_NORTH, MOVE_SOUTH});
         pipeShapes.put('-', new byte[]{MOVE_WEST, MOVE_EAST});
         pipeShapes.put('L', new byte[]{MOVE_NORTH, MOVE_EAST});
@@ -38,91 +38,72 @@ public class Day10 extends Solution<Integer> {
 
     public Day10() {
         super(2023, 10);
-    }
-
-    public void test(String input, List<Tile> correctTiles) {
-        var pipes = parsePipes(input);
-        var tiles = new Tile[pipes.length][pipes[0].length];
-
-        fillTiles(tiles, pipes);
-        mapMainLoop(tiles, pipes, input);
-
-        var enclosedTiles = 0;
-
-        for (var x = 0; x < pipes.length; x++) {
-            var row = pipes[x];
-            for (var y = 0; y < row.length; y++) {
-                var tile = tiles[x][y];
-
-                if (tile.mainLoop || tile.outside || tile.inside) {
-                    continue;
-                }
-
-                var area = new ArrayList<Tile>();
-                queueNeighbours(tile, area, tiles, (byte) -1);
-
-                var outside = false;
-                var enclosed = 0;
-
-                for (var areaTile : area) {
-                    if (areaTile.outside && !areaTile.mainLoop) {
-                        outside = true;
-                        break;
-                    }
-
-                    if (!areaTile.mainLoop) {
-                        enclosed++;
-                    }
-                }
-
-                if (outside) {
-                    for (var areaTile : area) {
-                        if (!areaTile.mainLoop) {
-                            areaTile.inside = false;
-                            areaTile.outside = true;
-                        }
-                    }
-                } else {
-                    enclosedTiles += enclosed;
-
-                    for (var areaTile : area) {
-                        if (!areaTile.mainLoop) {
-                            areaTile.inside = true;
-                        }
-                    }
-                }
-
-                for (var e : tiles) {
-                    for (var f : e) {
-                        f.indexed0 = 0;
-                        f.indexed1 = 0;
-                        f.indexed2 = 0;
-                        f.indexed3 = 0;
-                        f.simpleIndex = 0;
-                    }
-                }
-            }
-        }
-
-        // Printing the result
-        for (var y = 0; y < tiles[0].length; y++) {
-            for (var x = 0; x < tiles.length; x++) {
-                var tile = tiles[x][y];
-                System.out.print(tile.mainLoop ? tile.pipe : (tile.inside ? 'i' : (tile.outside ? 'O' : '.')));
-            }
-            System.out.println();
-        }
-
-        for (var e : tiles) {
-            for (var tile : e) {
-                if (!tile.inside || correctTiles.contains(tile)) {
-                    continue;
-                }
-
-                System.out.println(tile);
-            }
-        }
-
+        registerTest(2,
+                """
+                        ...........
+                        .S-------7.
+                        .|F-----7|.
+                        .||.....||.
+                        .||.....||.
+                        .|L-7.F-J|.
+                        .|..|.|..|.
+                        .L--J.L--J.
+                        ...........""", 4
+                );
+        registerTest(2,
+                """
+                        ..........
+                        .S------7.
+                        .|F----7|.
+                        .||....||.
+                        .||....||.
+                        .|L-7F-J|.
+                        .|..||..|.
+                        .L--JL--J.
+                        ..........""", 4
+        );
+        registerTest(2,
+                """
+                        .F----7F7F7F7F-7....
+                        .|F--7||||||||FJ....
+                        .||.FJ||||||||L7....
+                        FJL7L7LJLJ||LJ.L-7..
+                        L--J.L7...LJS7F-7L7.
+                        ....F-J..F7FJ|L7L7L7
+                        ....L7.F7||L7|.L7L7|
+                        .....|FJLJ|FJ|F7|.LJ
+                        ....FJL-7.||.||||...
+                        ....L---J.LJ.LJLJ...""", 8
+        );
+        registerTest(2,
+                """
+                        FF7FSF7F7F7F7F7F---7
+                        L|LJ||||||||||||F--J
+                        FL-7LJLJ||||||LJL-77
+                        F--JF--7||LJLJ7F7FJ-
+                        L---JF-JLJ.||-FJLJJ7
+                        |F|F-JF---7F7-L7L|7|
+                        |FFJF7L7F-JF7|JL---7
+                        7-L-JL7||F7|L7F-7F7|
+                        L.L7LFJ|||||FJL7||LJ
+                        L7JLJL-JLJLJL--JLJ.L""", 10
+        );
+        registerTest(2,
+                """
+                        F------------7.
+                        L---7F------7|.
+                        F---J|F-7F7FJ|.
+                        L---7||FJ||L7|.
+                        F---JLJL7||FJ|.
+                        L----7F-J||L7|.
+                        F----J|F-J|FJ|.
+                        L---7FJL7FJL-J.
+                        F---JL7FJ|.F-7.
+                        |F-S--JL7L-JFJ.
+                        ||F7.F7FJ-F-J..
+                        |LJL-JLJF7L--7.
+                        L-------JL---J.""", 1
+        );
     }
 
     @Override
@@ -172,7 +153,7 @@ public class Day10 extends Solution<Integer> {
                     continue;
                 }
 
-                var area = new ArrayList<Tile>();
+                var area = new HashSet<Tile>();
                 queueNeighboursIterative(tile, area, tiles);
 
                 var outside = false;
@@ -201,24 +182,15 @@ public class Day10 extends Solution<Integer> {
 
                 for (var e : tiles) {
                     for (var f : e) {
-                        f.indexed0 = 0;
-                        f.indexed1 = 0;
-                        f.indexed2 = 0;
-                        f.indexed3 = 0;
-                        f.simpleIndex = 0;
+                        f.northEast = false;
+                        f.northWest = false;
+                        f.southEast = false;
+                        f.southWest = false;
+                        f.simple = false;
                     }
                 }
             }
         }
-
-        // Printing the result
-//        for (var y = 0; y < tiles[0].length; y++) {
-//            for (var x = 0; x < tiles.length; x++) {
-//                var tile = tiles[x][y];
-//                System.out.print(tile.mainLoop ? tile.pipe : (tile.inside ? 'i' : (tile.outside ? 'O' : '.')));
-//            }
-//            System.out.println();
-//        }
 
         var count = 0;
         for (var e : tiles) {
@@ -232,128 +204,25 @@ public class Day10 extends Solution<Integer> {
         return count;
     }
 
-    private void queueNeighbours(Tile tile, Collection<Tile> area, Tile[][] tiles, byte pos) {
-        if (!tile.mainLoop) {
-            tile.simpleIndex++;
-        }
-
-        for (var offset : OFFSETS) {
-            var neighbour = getNeighbourSafe(tile.x, tile.y, offset, tiles);
-
-            if (neighbour == null) {
-                continue;
-            }
-
-            if (tile.mainLoop) {
-                var moves = tile.moves;
-
-                if (offset.y < 0) { // Going north
-                    if (pos == SOUTH_EAST && contains(moves, MOVE_EAST) || pos == SOUTH_WEST && contains(moves, MOVE_WEST)) {
-                        continue;
-                    }
-                } else if (offset.y > 0) {  // Going south
-                    if (pos == NORTH_EAST && contains(moves, MOVE_EAST) || pos == NORTH_WEST && contains(moves, MOVE_WEST)) {
-                        continue;
-                    }
-                } else if (offset.x < 0) {  // Going west
-                    if (pos == NORTH_EAST && contains(moves, MOVE_NORTH) || pos == SOUTH_EAST && contains(moves, MOVE_SOUTH)) {
-                        continue;
-                    }
-                } else {    // Going east
-                    if (pos == NORTH_WEST && contains(moves, MOVE_NORTH) || pos == SOUTH_WEST && contains(moves, MOVE_SOUTH)) {
-                        continue;
-                    }
-                }
-            }
-
-            if (neighbour.outside && !neighbour.mainLoop) {
-                for (var areaTile : area) {
-                    if (!areaTile.mainLoop) {
-                        areaTile.outside = true;
-                    }
-                }
-                return;
-            }
-
-            if (neighbour.indexed(pos)) {
-                continue;
-            }
-
-            if (neighbour.mainLoop) {
-                var moves = neighbour.moves;
-
-                if (tile.mainLoop) {
-                    var isWest = pos == 0 || pos == 2;
-                    var isNorth = pos == 0 || pos == 1;
-
-                    if (offset.y < 0) { // Going north
-                        pos = isWest ? (contains(moves, MOVE_WEST) ? SOUTH_WEST : NORTH_WEST) : (contains(moves, MOVE_EAST) ? SOUTH_EAST : NORTH_EAST);
-                    } else if (offset.y > 0) {  // Going south
-                        pos = isWest ? (contains(moves, MOVE_WEST) ? NORTH_WEST : SOUTH_WEST) : (contains(moves, MOVE_EAST) ? NORTH_EAST : SOUTH_EAST);
-                    } else if (offset.x < 0) {  // Going west
-                        pos = isNorth ? (contains(moves, MOVE_NORTH) ? NORTH_EAST : NORTH_WEST) : (contains(moves, MOVE_SOUTH) ? SOUTH_EAST : SOUTH_WEST);
-                    } else {    // Going east
-                        pos = isNorth ? (contains(moves, MOVE_NORTH) ? NORTH_WEST : NORTH_EAST) : (contains(moves, MOVE_SOUTH) ? SOUTH_WEST : SOUTH_EAST);
-                    }
-                } else {
-                    if (offset.y < 0) { // Going north
-                        pos = contains(moves, MOVE_WEST) ? (contains(moves, MOVE_EAST) ? SOUTH_EAST : NORTH_EAST) : NORTH_WEST;
-                    } else if (offset.y > 0) {  // Going south
-                        pos = contains(moves, MOVE_WEST) ? (contains(moves, MOVE_EAST) ? NORTH_EAST : SOUTH_EAST) : SOUTH_WEST;
-                    } else if (offset.x < 0) {  // Going west
-                        pos = contains(moves, MOVE_NORTH) ? (contains(moves, MOVE_SOUTH) ? SOUTH_EAST : SOUTH_WEST) : NORTH_WEST;
-                    } else {    // Going east
-                        pos = contains(moves, MOVE_NORTH) ? (contains(moves, MOVE_SOUTH) ? SOUTH_WEST : SOUTH_EAST) : NORTH_EAST;
-                    }
-                }
-
-                if (pos == 0) {
-                    neighbour.indexed0++;
-                } else if (pos == 1) {
-                    neighbour.indexed1++;
-                } else if (pos == 2) {
-                    neighbour.indexed2++;
-                } else {
-                    neighbour.indexed3++;
-                }
-            }
-
-//            if (tile.x == 6 && tile.y == 7) {
-//                tile.outside = tile.outside;
-//            }
-
-            try {
-                queueNeighbours(neighbour, area, tiles, pos);
-            } catch (StackOverflowError ignored) {
-                return;
-            }
-        }
-    }
-
     private void queueNeighboursIterative(Tile start, Collection<Tile> area, Tile[][] tiles) {
-        Queue<Pair<Tile, Pair<Byte, Tile>>> queue = new LinkedList<>();
-        queue.add(Pair.create(start, Pair.create((byte) -1, null)));
+        Queue<Pair<Tile, Byte>> queue = new LinkedList<>();
+        queue.add(Pair.create(start, (byte) -1));
 
         while (!queue.isEmpty()) {
             var pair = queue.poll();
-            var pair2 = pair.getRight();
 
             var tile = pair.getLeft();
-            var pos = pair2.getLeft();
-            var previous = pair2.getRight();
+            var pos = pair.getRight();
+
+            if (tile.updateAndCheck(pos)) {
+                continue;
+            }
 
             area.add(tile);
 
-            if (!tile.mainLoop) {
-                tile.simpleIndex++;
-            }
-
+            neighbours:
             for (var offset : OFFSETS) {
                 var neighbour = getNeighbourSafe(tile.x, tile.y, offset, tiles);
-
-                if (neighbour == null || neighbour == previous) {
-                    continue;
-                }
 
                 if (tile.mainLoop) {
                     var moves = tile.moves;
@@ -377,6 +246,10 @@ public class Day10 extends Solution<Integer> {
                     }
                 }
 
+                if (neighbour == null) {
+                    continue;
+                }
+
                 if (neighbour.outside && !neighbour.mainLoop) {
                     for (var areaTile : area) {
                         if (!areaTile.mainLoop) {
@@ -384,10 +257,6 @@ public class Day10 extends Solution<Integer> {
                         }
                     }
                     return;
-                }
-
-                if (neighbour.indexed(pos)) {
-                    continue;
                 }
 
                 byte neighbourPos = -1;
@@ -419,19 +288,15 @@ public class Day10 extends Solution<Integer> {
                             neighbourPos = contains(moves, MOVE_NORTH) ? (contains(moves, MOVE_SOUTH) ? SOUTH_WEST : SOUTH_EAST) : NORTH_EAST;
                         }
                     }
+                }
 
-                    if (neighbourPos == 0) {
-                        neighbour.indexed0++;
-                    } else if (neighbourPos == 1) {
-                        neighbour.indexed1++;
-                    } else if (neighbourPos == 2) {
-                        neighbour.indexed2++;
-                    } else {
-                        neighbour.indexed3++;
+                for (var paired : queue) {
+                    if (neighbourPos == paired.getRight() && neighbour.equals(paired.getLeft())) {
+                        continue neighbours;
                     }
                 }
 
-                queue.add(Pair.create(neighbour, Pair.create(neighbourPos, tile)));
+                queue.add(Pair.create(neighbour, neighbourPos));
             }
         }
     }
@@ -544,7 +409,7 @@ public class Day10 extends Solution<Integer> {
         final int x, y;
         final byte[] moves;
         boolean mainLoop, outside, inside;
-        int indexed0, indexed1, indexed2, indexed3, simpleIndex;
+        boolean northWest, northEast, southWest, southEast, simple;
 
         public Tile(char pipe, int x, int y) {
             this.pipe = pipe;
@@ -553,24 +418,27 @@ public class Day10 extends Solution<Integer> {
             this.moves = pipeShapes.get(pipe);
         }
 
-        boolean indexed(byte pos) {
-            var simpleTolerance = 0;
-            var tolerance = 0;
-
-            if (!mainLoop || pos == -1) {
-                return simpleIndex > simpleTolerance;
-            }
-
-            if (pos == 0) {
-                return indexed0 > tolerance;
-            } else if (pos == 1) {
-                return indexed1 > tolerance;
-            } else if (pos == 2) {
-                return indexed2 > tolerance;
-            } else if (pos == 3) {
-                return indexed3 > tolerance;
+        boolean updateAndCheck(byte pos) {
+            if (pos == NORTH_WEST) {
+                var value = northWest;
+                northWest = true;
+                return value;
+            } else if (pos == NORTH_EAST) {
+                var value = northEast;
+                northEast = true;
+                return value;
+            } else if (pos == SOUTH_WEST) {
+                var value = southWest;
+                southWest = true;
+                return value;
+            } else if (pos == SOUTH_EAST) {
+                var value = southEast;
+                southEast = true;
+                return value;
             } else {
-                return simpleIndex > simpleTolerance;
+                var value = simple;
+                simple = true;
+                return value;
             }
         }
 

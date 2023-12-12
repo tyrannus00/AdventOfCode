@@ -13,6 +13,10 @@ public class AdventOfCode {
 //        var tiles = Day10A.execute(Solution.inputToStringList(new Day10A().getInput()));
 //
 //        new Day10().test(new Day10A().getInput(), tiles);
-        new Day10().execute(2, 1);
+        var day = new Day10();
+
+        day.runTests(2);
+
+        day.execute(2, 1);
     }
 }
