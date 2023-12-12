@@ -8,8 +8,11 @@ import java.io.IOException;
 public class AdventOfCode {
 
     public static void main(String[] args) throws IOException {
-//        Solution.generateInput(2023, 1);
-
-        new Day08().execute(2, 1);
+//        Solution.generateInput(2023, 10);
+//
+//        var tiles = Day10A.execute(Solution.inputToStringList(new Day10A().getInput()));
+//
+//        new Day10().test(new Day10A().getInput(), tiles);
+        new Day10().execute(2, 1);
     }
 }

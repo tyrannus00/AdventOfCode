@@ -82,11 +82,11 @@ public abstract class Solution<T> {
 
     protected abstract T partTwo(String input);
 
-    protected List<String> inputToStringList(String input) {
+    public static List<String> inputToStringList(String input) {
         return Arrays.stream(input.split("\n")).toList();
     }
 
-    protected List<char[]> inputToCharArrayList(String input) {
+    protected static List<char[]> inputToCharArrayList(String input) {
         return Arrays.stream(input.split("\n")).map(String::toCharArray).toList();
     }
 
@@ -109,7 +109,7 @@ public abstract class Solution<T> {
         System.out.println("Average execution time over " + iterations + " iterations is " + ((endTimeNs - startTimeNs) / 1_000_000D / iterations) + "ms.");
     }
 
-    private String getInput() throws IOException {
+    public String getInput() throws IOException {
         try (var stream = new FileInputStream(INPUTS_PATH + year + "/" + day + ".txt")) {
             return new String(stream.readAllBytes());
         }
