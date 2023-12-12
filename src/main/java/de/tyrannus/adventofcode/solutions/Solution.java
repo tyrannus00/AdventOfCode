@@ -8,6 +8,7 @@ import java.net.HttpURLConnection;
 import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.MissingFormatArgumentException;
@@ -20,11 +21,47 @@ public abstract class Solution<T> {
 
     private final int year, day;
 
+    private final List<Test> tests1 = new ArrayList<>();
+    private final List<Test> tests2 = new ArrayList<>();
+
     public Solution(int year, int day) {
         this.year = year;
         this.day = day;
 
         generateInput(year, day);
+    }
+
+    /**
+     *
+     * @param part For which part the test is. Uses either the partOne or partTwo method.
+     * @param input The test puzzle input in text block format (""" ... """).
+     * @param expectedValue The value the part method should return.
+     */
+    protected void registerTest(int part, String input, T expectedValue) {
+        (part == 1 ? tests1 : tests2).add(new Test<>(input, expectedValue));
+    }
+
+    public void runTests(int part) {
+        var tests = part == 1 ? tests1 : tests2;
+
+        var testAmount = tests.size();
+
+        if (testAmount == 0) {
+            System.out.println("No tests specified!");
+            return;
+        }
+
+        var passed = 0;
+        for (var test : tests) {
+            var result = part == 1 ? partOne(test.input) : partTwo(test.input);
+            if (result == test.expectedValue) {
+                passed++;
+            } else {
+                System.out.println("Test " + test + " failed with value: " + result + ", expected was " + test.expectedValue);
+            }
+        }
+
+        System.out.println(passed + "/" + testAmount + " tests have passed successfully.");
     }
 
     public static void generateInput(int year, int day) {
@@ -118,4 +155,6 @@ public abstract class Solution<T> {
     private interface SolutionCalculator<T> {
         T calculate(String input);
     }
+
+    private record Test<T>(String input, T expectedValue) {}
 }
